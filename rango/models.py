@@ -1,6 +1,8 @@
 from django.db import models
 from django.template.defaultfilters import slugify
 from django.contrib.auth.models import User
+from django.utils import timezone
+from datetime import datetime
 
 
 class Category(models.Model):
@@ -23,6 +25,9 @@ class Category(models.Model):
 
 
     def save(self, *args, **kwargs):
+        # Added for the testing chapter.
+        if self.views < 0:
+            self.views = 0
         self.slug = self.my_slugify(self.name)
         super(Category, self).save(*args, **kwargs)
         # OR  super().save(*args, **kwargs)
@@ -36,9 +41,14 @@ class Page(models.Model):
     title = models.CharField(max_length=TITLE_MAX_LENGTH)
     url = models.URLField()
     views = models.IntegerField(default=0)
+    last_visit = models.DateTimeField(blank=True)
 
     def __str__(self): # For Python 2, use __unicode__ too
         return self.title
+
+    def save(self, *args, **kwargs):
+        self.last_visit = timezone.now()
+        super(Page, self).save(*args, **kwargs)
 
 
 class UserProfile(models.Model):

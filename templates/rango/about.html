@@ -6,11 +6,31 @@
 {% endblock %}
 
 {% block body_block %}
-<h1>Rango says...</h1>
+<div class="jumbotron p-4">
+    <div class="container">
+        <h1 class="jumbotron-heading">Rango says...</h1>
+    </div>
+</div>
 <div>
     here is the about page. <br />
     This tutorial has been put together by David Maxwell.<br />
+    <p>Visits: {{ visits }}</p>
 </div>
+
+<button class="btn btn-primary" onclick="alert('You clicked the button using inline JavaScript.');">
+  Click me - I run on vanilla JavaScript!
+</button>
+<button class="btn btn-primary" id="about-btn">
+  Click me - I'm using JQuery!
+</button>
+
+<br />
+<p>This is some text for the JQuery example.</p>
+<div id="msg">Hello! I'm a further example for JQuery testing.</div>
+<br />
+
+
+
 <img src="{% static 'images/Rango-2011.jpg' %}" alt="Picture of Rango" />
 <img src="{{ MEDIA_URL }}cat.jpg" alt="Picture of a Cat" />
 {% endblock %}

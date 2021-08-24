@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rango',
+    'registration',
+    'debug_panel',
 ]
 
 MIDDLEWARE = [
@@ -52,6 +54,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'tango_with_django_project.urls'
@@ -95,7 +98,7 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
         'OPTIONS': {
             'max_similarity' : 0.6,
-            'user_attributes':('username' 'first_name', 'last_name', 'email'),
+            'user_attributes':('username', 'first_name', 'last_name', 'email'),
          }
     },
     {
@@ -126,13 +129,16 @@ PASSWORD_HASHERS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+#TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+#  برای استفاده درست و دقیق از
+# timezone
+#  مقدارش را فالز کردیم
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)
@@ -148,5 +154,36 @@ MEDIA_URL = '/media/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# my settings
-LOGIN_URL = 'rango:login'
+#################
+#               #
+#  My Settings  #
+#               #
+#################
+
+# برای پکیج redux
+# کاربر بعد از رجیستر موفق به این پیج منتقل می شود
+# SIMPLE_BACKEND_REDIRECT_URL = 'rango:register_profile'
+
+# If True, users can register.
+REGISTRATION_OPEN = True
+# If True, the user will be automatically logged in after registering.
+REGISTRATION_AUTO_LOGIN = True
+# The URL that Django redirects users to after logging in.
+LOGIN_REDIRECT_URL = 'rango:index'
+# The page users are directed to if they are not logged in.
+# This was set in a previous chapter. The registration package uses this, too.
+# برای دکوراتور
+LOGIN_URL = 'auth_login'
+
+# LOGIN_URL = 'rango:login'
+#  auth default is 'accounts/login'
+
+SESSION_COOKIE_NAME = 'isa_session'
+# 86400 seconds = 1 day
+SESSION_COOKIE_AGE = 60 * 60 * 24
+# Whether the session cookie should be secure (https:// only).
+SESSION_COOKIE_SECURE = True
+
+# برای سفارشی کردن این فایل میتوانید به
+# django.conf.global_settings.py
+#مراجعه کنید
