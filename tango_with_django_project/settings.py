@@ -23,10 +23,21 @@ MEDIA_DIR = os.path.join(BASE_DIR, 'media')
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-*h)0ol95$uv4-j8j!f2nak+@+=gas77@_27uqrza2ws6%wj#v6'
+key = None
+try:
+    with open('secret.key', 'r') as f:
+        key = f.readline().strip()
+except:
+    try:
+        with open('../secret.key') as f:
+            key = f.readline().strip()
+    except:
+        raise IOError('secret.key file not found')
+
+SECRET_KEY = key
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 # ALLOWED_HOSTS = ['192.168.45.182','127.0.0.1', 'localhost', 'easa.pythonanywhere.com']
 ALLOWED_HOSTS = ['easa.pythonanywhere.com']
@@ -184,7 +195,9 @@ SESSION_COOKIE_NAME = 'isa_session'
 # 86400 seconds = 1 day
 SESSION_COOKIE_AGE = 60 * 60 * 24
 # Whether the session cookie should be secure (https:// only).
+# for security
 SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
 
 # برای سفارشی کردن این فایل میتوانید به
 # django.conf.global_settings.py
