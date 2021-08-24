@@ -2,7 +2,7 @@ my_env/
 __pycache__/
 *.sqlite3
 *.key
-tests.py
+rango/tests.py
 thumbs.db
 *.pyc
 .DS_Store
